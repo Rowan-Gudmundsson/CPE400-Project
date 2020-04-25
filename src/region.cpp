@@ -3,6 +3,20 @@
 std::mt19937 Region::m_twister =
     std::mt19937(std::chrono::system_clock::now().time_since_epoch().count());
 
+std::unordered_map<std::string, unsigned> Region::m_test_map;
+long long Region::m_test_count = 0;
+
+uint8_t Region::GenDirection() {
+  int x_dir = m_twister() % 4 - 1;
+  int y_dir = m_twister() % 4 - 1;
+
+  x_dir = x_dir < 0 ? 0 : x_dir;
+  y_dir = y_dir < 0 ? 0 : y_dir;
+
+  uint8_t dir = x_dir | (y_dir << 2);
+  return dir;
+}
+
 Region::Region(int x, int y) {
   m_x_dim = x;
   m_y_dim = y;
@@ -48,6 +62,18 @@ void Region::spawn_uavs(int n) {
     UAV* uav = new UAV(random_pos, this);
 
     m_entities.push_back(uav);
+  }
+}
+
+void Region::update(unsigned dt) {
+  delete m_region;
+  m_region = new unsigned[m_x_dim * m_y_dim];
+  std::fill(m_region, m_region + m_x_dim * m_y_dim, 0);
+
+  for (const auto& entity : m_entities) {
+    uint8_t dir = GenDirection();
+    entity->update(dt, dir);
+    ++this->operator()(entity->get_position());
   }
 }
 

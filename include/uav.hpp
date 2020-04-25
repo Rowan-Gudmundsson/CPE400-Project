@@ -3,19 +3,18 @@
 #include "common.hpp"
 
 class UAV : public Entity {
-    public:
-        UAV() = default;
-        UAV(const Position& pos, Region* region): Entity(pos, region) {}
+ public:
+  UAV() = default;
+  UAV(const Position& pos, Region* region) : Entity(pos, region) {}
 
-        EntityType m_type = EntityType::UAV_TYPE;
+  EntityType m_type = EntityType::UAV_TYPE;
 
-        void update(unsigned dt) override;
+  void update(unsigned dt, uint8_t direction) override;
 
-    private:
-        static const int m_coverage = UAV_COVERAGE;
-        static const int m_bandwidth = UAV_BANDWIDTH;
-        static const int m_fuel_capacity = MAX_FUEL;
+ private:
+  static const int m_coverage = UAV_COVERAGE;
+  static const int m_bandwidth = UAV_BANDWIDTH;
+  static const int m_fuel_capacity = MAX_FUEL;
 
-
-        int m_fuel_level = m_fuel_capacity;
+  int m_fuel_level = m_fuel_capacity;
 };

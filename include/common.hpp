@@ -4,7 +4,19 @@
 #define UAV_COVERAGE 3
 #define UAV_BANDWIDTH 1000
 
+#include <cstdint>
+
 class Region;
+
+enum class Direction {
+  NONE = 0,
+  UP = 1 << 0,
+  DOWN = 1 << 1,
+  LEFT = 1 << 2,
+  RIGHT = 1 << 3
+};
+
+bool operator&(uint8_t value, Direction direction);
 
 struct Position {
   Position(unsigned _x, unsigned _y) : x(_x), y(_y) {}
@@ -27,9 +39,15 @@ class Entity {
     UAV_TYPE = 2,
   } m_type;
 
-  virtual void update(unsigned dt) = 0;
+  virtual void update(unsigned dt, uint8_t direction) = 0;
 
- private:
+ protected:
   Position m_position;
   Region* m_region;
+  float m_speed;
+
+  void up(unsigned dt);
+  void down(unsigned dt);
+  void left(unsigned dt);
+  void right(unsigned dt);
 };

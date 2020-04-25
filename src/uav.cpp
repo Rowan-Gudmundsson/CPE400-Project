@@ -1,3 +1,3 @@
 #include "uav.hpp"
 
-void UAV::update(unsigned dt) {}
+void UAV::update(unsigned dt, uint8_t direction) {}
