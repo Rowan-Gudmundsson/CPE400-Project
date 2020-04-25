@@ -1,9 +1,13 @@
 #pragma once
 
 #define MAX_FUEL 100
-#define UAV_COVERAGE 3
-#define UAV_BANDWIDTH 1000
+#define UAV_COVERAGE 10
+#define UAV_BANDWIDTH 100
+#define MICRO_CONVERSION 1000000
 
+#include <Windows.h>
+
+#include <cmath>
 #include <cstdint>
 
 class Region;
@@ -19,17 +23,39 @@ enum class Direction {
 bool operator&(uint8_t value, Direction direction);
 
 struct Position {
-  Position(unsigned _x, unsigned _y) : x(_x), y(_y) {}
+  /**
+   * \brief Compute the distance from one point to another
+   **/
+  static double Distance(Position a, Position b);
 
-  unsigned x;
-  unsigned y;
+  Position() = default;
+  Position(double _x, double _y) : x(_x), y(_y) {}
+
+  bool operator==(Position b) {
+    return (int)x == (int)b.x && (int)y == (int)b.y;
+  }
+  bool operator==(const Position& b) const {
+    return (int)x == (int)b.x && (int)y == (int)b.y;
+  }
+
+  double x;
+  double y;
+};
+
+class PositionHasher {
+ public:
+  size_t operator()(const Position& key) const {
+    return (long long unsigned)key.x | ((long long unsigned)key.y << 32);
+  }
 };
 
 class Entity {
  public:
   Entity() = default;
   Entity(const Position& pos, Region* region)
-      : m_position(pos), m_region(region) {}
+      : m_position(pos), m_region(region) {
+    m_speed = 0.05;
+  }
 
   Position get_position() { return m_position; }
 
