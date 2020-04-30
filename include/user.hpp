@@ -1,3 +1,11 @@
+// Filename:  user.hpp
+// Author(s): Rowan Gudmundsson
+//            Michael Des Roches
+//            Emily Godby
+// Date: 30APR2020
+// Class: CPE 400 - Networks
+///////////////////////////////////////////////////////////////////////
+
 #pragma once
 
 #include <random>

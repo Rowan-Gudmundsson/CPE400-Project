@@ -1,7 +1,20 @@
-#include "uav.hpp"
+// Filename:  uav.cpp
+// Author(s): Rowan Gudmundsson
+//            Michael Des Roches
+//            Emily Godby
+// Date: 30APR2020
+// Class: CPE 400 - Networks
+///////////////////////////////////////////////////////////////////////////////////
 
+#include "uav.hpp"
 #include "user.hpp"
 
+/*---------------------------------------------------------------------------------
+|  Function:
+|  Purpose: 
+|  Parameters: 
+|  Returns:  
+*--------------------------------------------------------------------------------*/
 void UAV::update(unsigned dt, uint8_t direction) {
   m_fuel_level -= (double)dt / MICRO_CONVERSION;
   if (m_fuel_level <= 0) {
@@ -44,7 +57,12 @@ void UAV::update(unsigned dt, uint8_t direction) {
     m_position = Position(vector.x + m_position.x, vector.y + m_position.y);
   }
 }
-
+/*---------------------------------------------------------------------------------
+|  Function:
+|  Purpose: 
+|  Parameters: 
+|  Returns:  
+*--------------------------------------------------------------------------------*/
 bool UAV::attach_user(Entity* user, unsigned dt) {
   if (m_fuel_level <= 0) {
     return false;
@@ -61,7 +79,12 @@ bool UAV::attach_user(Entity* user, unsigned dt) {
 
   return false;
 }
-
+/*---------------------------------------------------------------------------------
+|  Function:
+|  Purpose: 
+|  Parameters: 
+|  Returns:  
+*--------------------------------------------------------------------------------*/
 unsigned UAV::get_covered() {
   unsigned total = 0;
   for (const auto& user : m_attached_users) {
@@ -70,7 +93,12 @@ unsigned UAV::get_covered() {
 
   return total;
 }
-
+/*---------------------------------------------------------------------------------
+|  Function:
+|  Purpose: 
+|  Parameters: 
+|  Returns:  
+*--------------------------------------------------------------------------------*/
 bool UAV::dispatch(Position pos) {
   if (m_reached && !m_refueling) {
     m_target = pos;
