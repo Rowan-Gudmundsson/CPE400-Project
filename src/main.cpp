@@ -1,6 +1,6 @@
-#include <conio.h>
-
 #include "region.hpp"
+
+#include "conio.h"
 
 #define MAX_ITT 1000000
 
@@ -21,10 +21,11 @@ int main() {
     region.update(elapsed.count());
     end = std::chrono::steady_clock::now();
 
-    if (itt % 1000 == 0) {
       system("CLS");
       std::cout << region << std::endl;
-    }
+
+      getch();
+
     itt++;
   }
 
