@@ -36,8 +36,8 @@ int main() {
 
       std::cout << region << std::endl;
 
+      //Pauses system and waits for input from user
       getch();
-
       system("CLS");
     itt++;
   }

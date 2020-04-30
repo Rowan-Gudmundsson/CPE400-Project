@@ -16,7 +16,7 @@ long long Region::m_test_count = 0;
 std::unordered_map<Position, UAV*, PositionHasher> Region::m_dispatch;
 
 /*---------------------------------------------------------------------------------
-|  Function:
+|  Function: GenDirection()
 |  Purpose: 
 |  Parameters: 
 |  Returns:  
@@ -27,10 +27,10 @@ uint8_t Region::GenDirection() {
   return dir == 0 ? 0 : 1 << dir - 1;
 }
 /*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
+|  Function: Region(int x, int y)
+|  Purpose: initializes region with size x by y 
+|  Parameters: int x and int y
+|  Returns: N/A
 *--------------------------------------------------------------------------------*/
 Region::Region(int x, int y) {
   m_x_dim = x;
@@ -100,7 +100,7 @@ unsigned Region::operator()(Entity::EntityType type,
 |  Function: spawn_users(int n)
 |  Purpose:  place users in the region at a random position, and creates a new 
 |            User class object
-|  Parameters: 
+|  Parameters: n - how many users to spawn in random positions of the region
 |  Returns: N/A
 *--------------------------------------------------------------------------------*/
 void Region::spawn_users(int n) {
@@ -119,7 +119,7 @@ void Region::spawn_users(int n) {
 |  Function: spawn_uavs(int n)
 |  Purpose: places uavs in the region at a random position, and creates a new 
 |           UAV class object
-|  Parameters:
+|  Parameters: number of uavs
 |  Returns:  N/A
 *--------------------------------------------------------------------------------*/
 void Region::spawn_uavs(int n) {
@@ -145,6 +145,8 @@ void Region::spawn_uavs(int n) {
 *--------------------------------------------------------------------------------*/
 void Region::update(unsigned dt) {
   std::vector<unsigned> user_discretized = discretize_user(UAV_COVERAGE);
+
+  //displays discretized matrix
   std::cout << "DISCRETIZED" << std::endl;
   for (unsigned i = 0; i < m_x_dim / UAV_COVERAGE; i++) {
     for (unsigned j = 0; j < m_y_dim / UAV_COVERAGE; j++) {
@@ -152,7 +154,8 @@ void Region::update(unsigned dt) {
     }
     std::cout << std::endl;
   }
-  dispatch_uavs(user_discretized);
+
+  dispatch_uavs(user_discretized); //sends uavs accordingly
 
   reset_matrices();
 
@@ -214,10 +217,10 @@ double Region::determine_error(unsigned dt) {
   return 1 - (double)covered / demand;
 }
 /*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
+|  Function: discretize_user(unsigned size)
+|  Purpose: creates a matrix based upon UAV coverage 
+|  Parameters: UAV_COVERAGE
+|  Returns: vector
 *--------------------------------------------------------------------------------*/
 std::vector<unsigned> Region::discretize_user(unsigned size) {
   std::vector<unsigned> result =

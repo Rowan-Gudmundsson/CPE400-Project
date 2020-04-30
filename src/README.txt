@@ -10,7 +10,8 @@ Class = CPE 400 - Networks
 1. [Project Topic]
 2. [Assumption]
 3. [Requirements/Constraints]
-4. [Running Instructions]
+4. [General Framework]
+5. [Running Instructions]
 
 1. Project Topic
     
@@ -28,8 +29,10 @@ Class = CPE 400 - Networks
      some subareas in the region will be highly crowded (more than what a 
      single UAV can serve.) at unpredictable time durations.
 
+4. General Framework 
 
-///////////////////////////// 4. [RUNNING INSTRUCTIONS] ///////////////////////////////
+
+///////////////////////////// 5. [RUNNING INSTRUCTIONS] ///////////////////////////////
 First BUILD then RUN
 
 BUILD: inside project directory
@@ -41,5 +44,5 @@ make -j4
 RUN: inside build directory
 ./UAVNetwork
 
-*Notes: Program pauses on each iteration, just press any key to inspect next iteration
+***Notes: Program pauses on each iteration, just press any key to inspect next iteration***
 ////////////////////////////////////////////////////////////////////////////////////////
