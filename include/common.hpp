@@ -5,8 +5,6 @@
 #define UAV_BANDWIDTH 100
 #define MICRO_CONVERSION 1000000
 
-#include <Windows.h>
-
 #include <cmath>
 #include <cstdint>
 
