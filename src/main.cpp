@@ -7,7 +7,6 @@
 ///////////////////////////////////////////////////////////////////////////////////
 
 #include "region.hpp"
-#include "conio.h"
 
 #define MAX_ITT 1000000
 
@@ -37,7 +36,7 @@ int main() {
       std::cout << region << std::endl;
 
       //Pauses system and waits for input from user
-      getch();
+      //getch();
       system("CLS");
     itt++;
   }

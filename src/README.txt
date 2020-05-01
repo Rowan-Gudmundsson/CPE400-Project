@@ -44,5 +44,5 @@ make -j4
 RUN: inside build directory
 ./UAVNetwork
 
-***Notes: Program pauses on each iteration, just press any key to inspect next iteration***
+***Notes: Program runs infinitely, spam <control + C> to end loop ***
 ////////////////////////////////////////////////////////////////////////////////////////
