@@ -31,6 +31,16 @@ Class = CPE 400 - Networks
 
 4. General Framework 
 
+    A general explanation for the project’s main functionality
+    An Entity (see Common.cpp) is in a region in which it has a speed, position, 
+    and can move freely (left, right, up, down). An Entity can be either a User 
+    (User.cpp) or a UAV (UAV.cpp). A Region (Region.cpp) holds space for 60x60 nodes, 
+    in which 1000 are spawned as users and 10 are spawned as UAVs. A Region updates 
+    every frame, which will also update all of the entities’ in the region properties.
+    The Region is discretized into 10 different regions where each has a value of the 
+    coverage level needed in that region. According to those coverage levels, the UAVs 
+    are dispatched to the region in which the most users are covered.
+
 
 ///////////////////////////// 5. [RUNNING INSTRUCTIONS] ///////////////////////////////
 First BUILD then RUN

@@ -9,10 +9,10 @@
 #include "region.hpp"
 
 /*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
+|  Function: operator&()
+|  Purpose: overload function
+|  Parameters: value, direction
+|  Returns: bool
 *--------------------------------------------------------------------------------*/
 bool operator&(uint8_t value, Direction direction) {
   return static_cast<bool>((value & (uint8_t)direction) == (uint8_t)direction);
@@ -28,10 +28,10 @@ double Position::Distance(Position a, Position b) {
                    std::pow(std::abs(a.y - b.y), 2));
 }
 /*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
+|  Function: up()
+|  Purpose: moves entity up at a set speed over time
+|  Parameters: time
+|  Returns: NA
 *--------------------------------------------------------------------------------*/
 void Entity::up(unsigned dt) {
   if (m_position.y - m_speed * dt <= 0.0) {
@@ -41,10 +41,10 @@ void Entity::up(unsigned dt) {
   }
 }
 /*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
+|  Function: down()
+|  Purpose: moves entity down at a set speed over time
+|  Parameters: time
+|  Returns:  N/A
 *--------------------------------------------------------------------------------*/
 void Entity::down(unsigned dt) {
   if (m_position.y + m_speed * dt >= m_region->m_y_dim) {
@@ -54,10 +54,10 @@ void Entity::down(unsigned dt) {
   }
 }
 /*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
+|  Function: left()
+|  Purpose: moves entity left at a set speed over time
+|  Parameters: time
+|  Returns: N/A
 *--------------------------------------------------------------------------------*/
 void Entity::left(unsigned dt) {
   if (m_position.x - m_speed * dt <= 0.0) {
@@ -67,10 +67,10 @@ void Entity::left(unsigned dt) {
   }
 }
 /*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
+|  Function: right()
+|  Purpose: moves entity right at a set speed over time
+|  Parameters: time
+|  Returns:  N/A
 *--------------------------------------------------------------------------------*/
 void Entity::right(unsigned dt) {
   if (m_position.x + m_speed * dt >= m_region->m_x_dim) {

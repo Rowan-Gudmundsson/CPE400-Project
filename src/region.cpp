@@ -15,12 +15,6 @@ std::unordered_map<std::string, unsigned> Region::m_test_map;
 long long Region::m_test_count = 0;
 std::unordered_map<Position, UAV*, PositionHasher> Region::m_dispatch;
 
-/*---------------------------------------------------------------------------------
-|  Function: GenDirection()
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
-*--------------------------------------------------------------------------------*/
 uint8_t Region::GenDirection() {
   int dir = m_twister() % 5;
 
@@ -38,57 +32,32 @@ Region::Region(int x, int y) {
 
   reset_matrices();
 }
-/*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
-*--------------------------------------------------------------------------------*/
+//operatot overloads
 unsigned Region::operator()(int x, int y) const {
   return m_user_locations[y * m_y_dim + x] + m_uav_locations[y * m_y_dim + x];
 }
-/*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
-*--------------------------------------------------------------------------------*/
+
 unsigned& Region::operator()(Entity::EntityType type, int x, int y) {
   if (type == Entity::USER_TYPE) {
     return m_user_locations[y * m_y_dim + x];
   }
   return m_uav_locations[y * m_y_dim + x];
 }
-/*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
-*--------------------------------------------------------------------------------*/
+
 unsigned Region::operator()(Entity::EntityType type, int x, int y) const {
   if (type == Entity::USER_TYPE) {
     return m_user_locations[y * m_y_dim + x];
   }
   return m_uav_locations[y * m_y_dim + x];
 }
-/*---------------------------------------------------------------------------------
-|  Function: operator()
-|  Purpose: 
-|  Parameters: NONE
-|  Returns: uav or user location
-*--------------------------------------------------------------------------------*/
+
 unsigned& Region::operator()(Entity::EntityType type, const Position& pos) {
   if (type == Entity::USER_TYPE) {
     return m_user_locations[(int)pos.y * m_y_dim + (int)pos.x];
   }
   return m_uav_locations[(int)pos.y * m_y_dim + (int)pos.x];
 }
-/*---------------------------------------------------------------------------------
-|  Function: operator()
-|  Purpose: 
-|  Parameters: NONE
-|  Returns: uav or user location
-*--------------------------------------------------------------------------------*/
+
 unsigned Region::operator()(Entity::EntityType type,
                             const Position& pos) const {
   if (type == Entity::USER_TYPE) {
@@ -96,6 +65,8 @@ unsigned Region::operator()(Entity::EntityType type,
   }
   return m_uav_locations[(int)pos.y * m_y_dim + (int)pos.x];
 }
+// end of operator overloads
+
 /*---------------------------------------------------------------------------------
 |  Function: spawn_users(int n)
 |  Purpose:  place users in the region at a random position, and creates a new 
@@ -140,7 +111,7 @@ void Region::spawn_uavs(int n) {
 |           subregion. Then, it dispatches the UAVs to the locations with 
 |           the most user coverage. Finally, it updates the User and UAVs 
 |           and determines the error calculation.
-|  Parameters: 
+|  Parameters: time
 |  Returns: N/A
 *--------------------------------------------------------------------------------*/
 void Region::update(unsigned dt) {
@@ -177,12 +148,12 @@ void Region::update(unsigned dt) {
   std::cout << "ERROR: " << error << std::endl;
 }
 /*---------------------------------------------------------------------------------
-|  Function:
+|  Function: determoine_error()
 |  Purpose: for debugging and error detection, the region will calculate 
 |           its error based on the amount of users who are not covered 
 |           compared to the demand of the network.
-|  Parameters: 
-|  Returns:  
+|  Parameters: time
+|  Returns: double
 *--------------------------------------------------------------------------------*/
 double Region::determine_error(unsigned dt) {
   unsigned demand = 0;
@@ -240,11 +211,11 @@ std::vector<unsigned> Region::discretize_user(unsigned size) {
   return result;
 }
 /*---------------------------------------------------------------------------------
-|  Function:
+|  Function: dispatch_uavs()
 |  Purpose: dispatches the closest UAV to the subregion with the most 
 |           demand for coverage.
-|  Parameters: 
-|  Returns:  
+|  Parameters: vector
+|  Returns: N/A
 *--------------------------------------------------------------------------------*/
 void Region::dispatch_uavs(std::vector<unsigned>& discretized) {
   std::vector<unsigned> sorted = discretized;
@@ -304,10 +275,10 @@ void Region::dispatch_uavs(std::vector<unsigned>& discretized) {
   }
 }
 /*---------------------------------------------------------------------------------
-|  Function:
+|  Function: reset_matrices()
 |  Purpose: region is reset with new random user locations
-|  Parameters: 
-|  Returns:  
+|  Parameters: NONE
+|  Returns: N/A
 *--------------------------------------------------------------------------------*/
 void Region::reset_matrices() {
   if (m_user_locations == nullptr) {
@@ -325,10 +296,10 @@ void Region::reset_matrices() {
   std::fill(m_uav_locations, m_uav_locations + m_x_dim * m_y_dim, 0);
 }
 /*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
+|  Function: <<operator()
+|  Purpose: printing the matrix
+|  Parameters: stream and region
+|  Returns: stream
 *--------------------------------------------------------------------------------*/
 std::ostream& operator<<(std::ostream& stream, const Region& region) {
   for (int i = 0; i < region.m_x_dim; i++) {
