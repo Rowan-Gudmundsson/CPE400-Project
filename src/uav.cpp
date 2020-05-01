@@ -10,10 +10,10 @@
 #include "user.hpp"
 
 /*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
+|  Function: update()
+|  Purpose: updates UAV entity
+|  Parameters: dt, direction
+|  Returns:  N/A
 *--------------------------------------------------------------------------------*/
 void UAV::update(unsigned dt, uint8_t direction) {
   m_fuel_level -= (double)dt / MICRO_CONVERSION;
@@ -58,9 +58,9 @@ void UAV::update(unsigned dt, uint8_t direction) {
   }
 }
 /*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
+|  Function: attach_user()
+|  Purpose: checks fuel level then attaches to user entity as required
+|  Parameters: user info and time
 |  Returns:  
 *--------------------------------------------------------------------------------*/
 bool UAV::attach_user(Entity* user, unsigned dt) {
@@ -80,10 +80,10 @@ bool UAV::attach_user(Entity* user, unsigned dt) {
   return false;
 }
 /*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
+|  Function: get_covered()
+|  Purpose: checks area covered by UAV
+|  Parameters: NONE
+|  Returns: returns total coverage based on usage level
 *--------------------------------------------------------------------------------*/
 unsigned UAV::get_covered() {
   unsigned total = 0;
@@ -94,10 +94,10 @@ unsigned UAV::get_covered() {
   return total;
 }
 /*---------------------------------------------------------------------------------
-|  Function:
-|  Purpose: 
-|  Parameters: 
-|  Returns:  
+|  Function: dispatch()
+|  Purpose: ensures UAV doesn't need refuel
+|  Parameters: UAV position
+|  Returns: bool
 *--------------------------------------------------------------------------------*/
 bool UAV::dispatch(Position pos) {
   if (m_reached && !m_refueling) {
